@@ -1,0 +1,11 @@
+$ ./backup.sh
+Usage: ./backup.sh <target_directory>
+
+$ ./backup.sh /home/suhani/does_not_exist
+Error: Target directory '/home/suhani/does_not_exist' does not exist.
+
+$ ./backup.sh /home/suhani/projects
+Backup successful!
+Files saved in: /home/suhani/backup/directories/backup_2025-11-16_10-50-45
+
+[2025-11-16_10-50-45] Backup of '/home/suhani/projects' completed -> /home/suhani/backup/directories/backup_2025-11-16_10-50-45
