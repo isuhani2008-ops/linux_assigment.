@@ -1,0 +1,38 @@
+
+#!/bin/bash
+# Author: Suhani
+# Date: 15/11/25
+# --- Script to log CPU and memory usage to a file at regular intervals ---
+
+# Log file path
+log_file_path="/home/suhani/monitoring_logs"
+log_file="$log_file_path/sys_monitoring.log"
+
+# Interval in seconds
+interval=5
+
+# Create log directory if it doesn't exist
+mkdir -p "$log_file_path"
+
+# Create log file with header if it doesn't exist
+if [ ! -f "$log_file" ]; then
+    echo "Timestamp, CPU_Usage(%), Memory_Usage(%)" > "$log_file"
+fi
+
+# Infinite loop to log usage
+while true
+do
+    timestamp=$(date +"%Y-%m-%d %H:%M:%S")
+
+    # Get CPU usage (user + system)
+    cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
+
+    # Get memory usage (%)
+    mem_usage=$(free | awk '/Mem/ {printf "%.2f", $3/$2 * 100.0}')
+
+    # Append to log file
+    echo "$timestamp, $cpu_usage, $mem_usage" >> "$log_file"
+
+    # Wait for the interval
+    sleep $interval
+done
